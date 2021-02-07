@@ -3,9 +3,9 @@ Discord clone app using React, Redux and Firebase
 
 <!-- <strong>Application live link:</strong> https://robinhood-clone-34795.web.app -->
 
-<!-- **Download**
+**Download**
 
-`> git clone https://github.com/harvi7/robinhood-clone.git` -->
+`> git clone https://github.com/harvi7/discord-clone.git`
 
 In your terminal write:
 
