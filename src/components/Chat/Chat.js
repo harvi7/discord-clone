@@ -6,13 +6,14 @@ import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions'
 
 import './Chat.css'
 import ChatHeader from './ChatHeader'
+import Message from './Message'
 
 function Chat() {
     return (
         <div className="chat">
             <ChatHeader />
             <div className="chat__messages">
-
+                <Message />
             </div>
             <div className="chat__input">
                 <AddCircleIcon />
