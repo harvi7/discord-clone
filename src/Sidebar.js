@@ -29,6 +29,18 @@ function Sidebar() {
             )
         )
     }, [])
+
+    const handleAddChannel = (e) => {
+        e.preventDefault()
+        const channelName = prompt("Enter a new channel name")
+
+        if (channelName) {
+            db.collection('channels').add({
+                channelName: channelName
+            })
+        }
+
+    }
     
     return (
         <div className="sidebar">
@@ -42,14 +54,13 @@ function Sidebar() {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-                    <AddIcon className="sidebar__addChannel"/>
+                    <AddIcon onClick={handleAddChannel} className="sidebar__addChannel"/>
                 </div>
 
                 <div className="sidebar__channelsList">
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
-                    <SidebarChannel />
+                    { channels.map(({ id, channel }) => (
+                        <SidebarChannel key={id} id={id} channelName={channel.channelName} />
+                    ))}
                 </div>
             </div>
 
