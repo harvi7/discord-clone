@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import AddIcon from '@material-ui/icons/Add'
 import SignalCellularAltIcon  from '@material-ui/icons/SignalCellularAlt'
@@ -8,12 +8,28 @@ import { Avatar } from '@material-ui/core'
 import MicIcon from '@material-ui/icons/Mic'
 import HeadsetIcon from '@material-ui/icons/Headset'
 import SettingsIcon from '@material-ui/icons/Settings'
+import { useSelector } from 'react-redux'
 
 import './Sidebar.css'
 import SidebarChannel from './SidebarChannel'
-
+import { selectUser } from './features/userSlice'
+import db, { auth } from './firebase'
 
 function Sidebar() {
+    const user = useSelector(selectUser)
+    const [channels, setChannels] = useState([])
+
+    useEffect(() => {
+        db.collection('channels').onSnapshot(snapshot =>
+            setChannels(
+                snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    channel: doc.data(),
+                }))
+            )
+        )
+    }, [])
+    
     return (
         <div className="sidebar">
             <div className="sidebar__top">
@@ -54,10 +70,10 @@ function Sidebar() {
             </div>
 
             <div className="sidebar__profile">
-                <Avatar src="https://avatars.githubusercontent.com/u/17290152?s=400&u=2c912c971b8f0a8282a97ef43574be90965f4a3c&v=4"/>
+                <Avatar onClick={() => auth.signOut()} src={user.photo}/>
                 <div className="sidebar__profileInfo">
-                    <h3>Harsh Virani</h3>
-                    <p>#CptnHrvi</p>
+                    <h3>{user.displayName}</h3>
+                    <p>#{user.uid.substring(0, 5)}</p>
                 </div>
 
                 <div className="sidebar__profileIcons">
